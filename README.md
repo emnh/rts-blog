@@ -14,8 +14,8 @@ The following [screenshot](https://emnh.github.io/rts-blog-screenshots/shots/gam
  - Resource downloading and progress manager
  - Bootstrapping ClojureScript in a web worker
  - Engine logic web worker separation and message passing
- - ClojureScript optimizations
- - Camera control
+ - [ClojureScript optimizations](#optimizations)
+ - [Camera control](#camera)
  - Terrain
  - Fast heightfield lookup in ClojureScript
  - [Voxelization of 3D geometries](#voxelization)
@@ -73,6 +73,69 @@ I used the [goog.History library](https://google.github.io/closure-library/api/g
 
 [Not much of a screenshot follows:](https://emnh.github.io/rts-blog-screenshots/shots/lobby.jpg)
 ![Lobby](https://emnh.github.io/rts-blog-screenshots/shots/lobby.jpg)
+
+### <a name="optimizations">ClojureScript optimizations</a>
+
+In tight render/engine loops Clojure sequences over units turned out to be way too slow, so I had to replace them with plain loops.
+I did profiling in Chrome and checked it out. Maybe there were other optimizations but I don't remember.
+
+### <a name="camera">Camera control</a>
+
+[The source code is here](https://github.com/emnh/rts/blob/master/src.client/game/client/controls.cljs).
+
+Worth noting is that you should only move the camera for each requestAnimationFrame to make smoother animations, not on the keypress events themselves. The more interesting implementation was arcball rotation:
+
+```clojure
+(defn arc-ball-rotation-left-right
+  [state sign]
+  (let
+    [camera (:camera state)
+     focus (scene/get-camera-focus camera 0 0)
+     axis (-> camera .-position .clone)
+     _ (-> axis (.sub focus))
+     _ (-> axis .-y (set! 0))
+     _ (-> axis .normalize)
+     old (-> camera .-position .clone)
+     config (:config state)
+     rotate-speed (get-in config [:controls :rotate-speed])
+     rotate-speed (* sign rotate-speed)
+     rotate-speed (* rotate-speed (get-elapsed state))]
+
+    (-> camera .-position (.applyAxisAngle axis rotate-speed))
+    (-> camera .-position .-y (set! (-> old .-y)))
+    (-> camera (.lookAt focus))))
+
+
+(defn arc-ball-rotation-up-down
+  [state sign]
+  (let
+    [camera (:camera state)
+     focus (scene/get-camera-focus camera 0 0)
+     axis (-> camera .-position .clone)
+     _ (-> axis (.sub focus))
+     offset axis
+     config (:config state)
+     rotate-speed (get-in config [:controls :rotate-speed])
+     rotate-speed (* sign rotate-speed)
+     rotate-speed (* rotate-speed (get-elapsed state))
+     theta (atan2 (-> offset .-x) (-> offset .-z))
+     xzlen (sqrt (+ (square (-> offset .-x)) (square (-> offset .-z))))
+     min-polar-angle 0.1
+     max-polar-angle (- (/ pi 2) (/ pi 16))
+     phi (atan2 xzlen (-> offset .-y))
+     phi (+ phi rotate-speed)
+     phi (min max-polar-angle phi)
+     phi (max min-polar-angle phi)
+     radius (-> offset .length)
+     x (* radius (sin phi) (sin theta))
+     y (* radius (cos phi))
+     z (* radius (sin phi) (cos theta))
+     _ (-> offset (.set x y z))]
+
+    (-> camera .-position (.copy focus))
+    (-> camera .-position (.add offset))
+    (-> camera (.lookAt focus))))
+```
 
 ### <a name="voxelization">Voxelization of 3D geometries</a>
 First off, [here is a link to the source code](https://github.com/emnh/rts/blob/master/src.client/game/client/voxelize.cljs). Voxelization means to represent each part of a 3D geometry as a small box of the same size, rather than triangles of varying size. I used the approach described [here](http://drububu.com/miscellaneous/voxelizer/index.html). Well, it seems the author of that page has removed the description of the algorithm and just left the online voxelizer. Anyway, the algorithm is not too complicated: it runs entirely on the CPU (no GPU) and involves recursively subdividing each triangle in the 3D geometry until a constant threshold is hit, then check which box the triangle lies in and mark it as active / on. In addition, I did a flood fill to mark all interior boxes as on as well, since I wanted to explode the voxels and thus needed the inside filled. The algorithm is quite simple and slow, taking up to an hour to voxelize a simple 3D model, but I don't do it realtime, I just run it offline as a script with node.js over-night and save the voxels for the game to load, so it doesn't matter that much. If you want to do realtime voxelization you should look [here](https://developer.nvidia.com/content/basics-gpu-voxelization) instead.
