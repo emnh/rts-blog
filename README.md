@@ -2,6 +2,9 @@
 
 I am creating a [real-time strategy (RTS) game in WebGL and ClojureScript](https://github.com/emnh/rts). This is my blog about the process. I made the mistake of not documenting my development initially, but I will start now (25.04.2017) and try to look back on the code I've already written. If you want to comment on this blog [open an issue](https://github.com/emnh/rts-blog/issues) per topic or find an existing one on the GitHub repository. I might attach issue comments to the blog later using [this process](http://donw.io/post/github-comments/).
 
+The following screenshot will be updated as the game progresses (historical images will be in the blog posts about each feature):
+![screenshot of rts](https://emnh.github.io/rts-blog-screenshots/shots/game-test.jpg)
+
 ## Index of blog posts / topics
  - [History](#history)
  - [Game plan](#gameplan)
