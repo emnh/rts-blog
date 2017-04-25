@@ -20,7 +20,8 @@ The following [screenshot](https://emnh.github.io/rts-blog-screenshots/shots/gam
  - Fast heightfield lookup in ClojureScript
  - [Voxelization of 3D geometries](#voxelization)
  - [Unit explosions using voxelized representation](#explosions)
- - Magic stars
+ - [Magic stars](#magicstars)
+ - [Health bars](#healthbars)
  - Marquee selection
  - Water
  - Attack vectors using MathBox
@@ -70,6 +71,9 @@ I chose to use a ClojureScript React library called [Rum](https://github.com/ton
 ### <a name="spa">Single-page application</a>
 I used the [goog.History library](https://google.github.io/closure-library/api/goog.History.html) and wrote a custom solution for loading pages. Each page is a component, and also the game page component has a subsystem which contains the game components. I have a div for each page and mount Rum on it when the component starts. The single-page app code is a bit hairy, especially some hacks to differentiate switching a page and figwheel reloads and avoiding infinite reload loops, and since only one page should be loaded at a time starting the system is different from the standard Stuart Sierra component library call to start the system. It seems to work fine now however, so I am leaving a potential cleanup for later.
 
+[Not much of a screenshot follows:](https://emnh.github.io/rts-blog-screenshots/shots/lobby.jpg)
+![Lobby](https://emnh.github.io/rts-blog-screenshots/shots/lobby.jpg)
+
 ### <a name="voxelization">Voxelization of 3D geometries</a>
 First off, [here is a link to the source code](https://github.com/emnh/rts/blob/master/src.client/game/client/voxelize.cljs). Voxelization means to represent each part of a 3D geometry as a small box of the same size, rather than triangles of varying size. I used the approach described [here](http://drububu.com/miscellaneous/voxelizer/index.html). Well, it seems the author of that page has removed the description of the algorithm and just left the online voxelizer. Anyway, the algorithm is not too complicated: it runs entirely on the CPU (no GPU) and involves recursively subdividing each triangle in the 3D geometry until a constant threshold is hit, then check which box the triangle lies in and mark it as active / on. In addition, I did a flood fill to mark all interior boxes as on as well, since I wanted to explode the voxels and thus needed the inside filled. The algorithm is quite simple and slow, taking up to an hour to voxelize a simple 3D model, but I don't do it realtime, I just run it offline as a script with node.js over-night and save the voxels for the game to load, so it doesn't matter that much. If you want to do realtime voxelization you should look [here](https://developer.nvidia.com/content/basics-gpu-voxelization) instead.
 
@@ -93,3 +97,21 @@ Here is a [screenshot](https://emnh.github.io/rts-blog-screenshots/shots/explosi
 ![screenshot](https://emnh.github.io/rts-blog-screenshots/shots/explosions.jpg)
 
 Watch the [live demo here](https://emnh.github.io/voxel-explosions-demo/#game-test).
+
+### <a name="magicstars">Magic stars</a>
+
+[The source code is here](https://github.com/emnh/rts/blob/master/src.client/game/client/magic.cljs).
+
+I thought it would look nice to have magic stars raining down on buildings to indicate they are under construction or some other property, perhaps being under a spell. The GLSL just renders quads facing the camera, billboards as they are called and moves them from a source according to a formula to the location of the voxelized boxes of the unit geometry.
+
+[A screenshot follows:](https://emnh.github.io/rts-blog-screenshots/shots/magic-stars.jpg)
+![Magic stars](https://emnh.github.io/rts-blog-screenshots/shots/magic-stars.jpg)
+
+### <a name="healthbars">Health bars</a>
+
+[The source code is here](https://github.com/emnh/rts/blob/master/src.client/game/client/overlay.cljs).
+
+PS: There is a bug in this screenshot, where some health bars are hidden by unit geometry. Should be easy to fix by changing the z-order.
+
+[A screenshot follows:](https://emnh.github.io/rts-blog-screenshots/shots/health-bars.jpg)
+![Health bars](https://emnh.github.io/rts-blog-screenshots/shots/health-bars.jpg)
