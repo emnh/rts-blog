@@ -19,7 +19,7 @@ The following [screenshot](https://emnh.github.io/rts-blog-screenshots/shots/gam
  - Terrain
  - Fast heightfield lookup in ClojureScript
  - [Voxelization of 3D geometries](#voxelization)
- - Unit explosions using voxelized representation
+ - [Unit explosions using voxelized representation](#explosions)
  - Magic stars
  - Marquee selection
  - Water
@@ -77,3 +77,14 @@ Later I decided to add UV coordinates for texture mapping to each box relative t
 
 TODO: Add some illustrative graphics.
 TODO: Describe how to edit and run the voxelization script using node.js from the commandline.
+
+### <a name="explosions">Explosions</a>
+
+[The source code is here](https://github.com/emnh/rts/blob/master/src.client/game/client/explosion.cljs).
+
+TODO: Reread and explain how the GLSL code works.
+
+Here is a [screenshot](https://emnh.github.io/rts-blog-screenshots/shots/explosions.jpg):
+![screenshot](https://emnh.github.io/rts-blog-screenshots/shots/explosions.jpg)
+
+Watch the [live demo here](https://emnh.github.io/voxel-explosions-demo/#game-test).
