@@ -16,8 +16,8 @@ The following [screenshot](https://emnh.github.io/rts-blog-screenshots/shots/gam
  - Engine logic web worker separation and message passing
  - [ClojureScript optimizations](#optimizations)
  - [Camera control](#camera)
- - Terrain
- - Fast heightfield lookup in ClojureScript
+ - [Terrain](#terrain)
+ - [Fast heightfield lookup](#height-lookups)
  - [Voxelization of 3D geometries](#voxelization)
  - [Unit explosions using voxelized representation](#explosions)
  - [Magic stars](#magicstars)
@@ -136,6 +136,19 @@ I implemented typical RTS controls. Pan left/right/up/down, zoom in/out and also
     (-> camera .-position (.add offset))
     (-> camera (.lookAt focus))))
 ```
+
+### <a name="terrain>Terrain</a>
+
+[The source code is here](https://github.com/emnh/rts/blob/master/src.client/game/client/ground_local.cljs)
+[and here](https://github.com/emnh/rts/blob/master/src.client/game/client/ground_fancy.cljs).
+
+I mostly stole the code from a [three.js example](https://threejs.org/examples/webgl_terrain_dynamic.html), since I thought it looked good.
+
+### <a name="height-lookups">Fast heightfield lookup</a>
+
+[The source code is here](https://github.com/emnh/rts/blob/master/src.client/game/client/ground_local.cljs).
+
+I first thought I had to do bilinear interpolation, so I implemented that, but of course, it was just triangles in the mesh, no bilinear interpolation needed. So it's just finding the correct position in the heightfield and then interpolating the triangles, using math from [here](http://stackoverflow.com/questions/16077725/three-js-precision-terrain-collision).
 
 ### <a name="voxelization">Voxelization of 3D geometries</a>
 First off, [here is a link to the source code](https://github.com/emnh/rts/blob/master/src.client/game/client/voxelize.cljs). Voxelization means to represent each part of a 3D geometry as a small box of the same size, rather than triangles of varying size. I used the approach described [here](http://drububu.com/miscellaneous/voxelizer/index.html). Well, it seems the author of that page has removed the description of the algorithm and just left the online voxelizer. Anyway, the algorithm is not too complicated: it runs entirely on the CPU (no GPU) and involves recursively subdividing each triangle in the 3D geometry until a constant threshold is hit, then check which box the triangle lies in and mark it as active / on. In addition, I did a flood fill to mark all interior boxes as on as well, since I wanted to explode the voxels and thus needed the inside filled. The algorithm is quite simple and slow, taking up to an hour to voxelize a simple 3D model, but I don't do it realtime, I just run it offline as a script with node.js over-night and save the voxels for the game to load, so it doesn't matter that much. If you want to do realtime voxelization you should look [here](https://developer.nvidia.com/content/basics-gpu-voxelization) instead.
