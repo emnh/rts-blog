@@ -12,7 +12,7 @@ The following [screenshot](https://emnh.github.io/rts-blog-screenshots/shots/gam
  - [ClojureScript React library: Rum](#webui)
  - [Single-page application](#spa)
  - Resource downloading and progress manager
- - Bootstrapping ClojureScript in a web worker
+ - [Bootstrapping ClojureScript in a web worker](#worker-bootstrap)
  - Engine logic web worker separation and message passing
  - [ClojureScript optimizations](#optimizations)
  - [Camera control](#camera)
@@ -74,6 +74,40 @@ I used the [goog.History library](https://google.github.io/closure-library/api/g
 
 [Not much of a screenshot follows:](https://emnh.github.io/rts-blog-screenshots/shots/lobby.jpg)
 ![Lobby](https://emnh.github.io/rts-blog-screenshots/shots/lobby.jpg)
+
+### <a name="worker-bootstrap">Worker bootstrap</a>
+
+It is quite slow, taking about 5 seconds to load the worker, and there is no figwheel hot reload support.
+Here is how to bootstrap ClojureScript in a Web Worker:
+
+```javascript
+console.log("from worker");
+console.time("worker-load")
+
+CLOSURE_BASE_PATH = "../goog/"
+/**
+ * Imports a script using the Web Worker importScript API.
+ *
+ * @param {string} src The script source.
+ * @return {boolean} True if the script was imported, false otherwise.
+ */
+this.CLOSURE_IMPORT_SCRIPT = (function(global) {
+  return function(src) {
+    global['importScripts'](src);
+    return true;
+  };
+})(this);
+
+BASE_PATH = "../";
+importScripts(CLOSURE_BASE_PATH + "base.js");
+importScripts("../game.js");
+importScripts(
+    BASE_PATH + "jscache/simplex-noise.js",
+    BASE_PATH + "jscache/three.js",
+    BASE_PATH + "bundle-deps-worker.js");
+goog.require('game.worker.core');
+console.timeEnd("worker-load")
+```
 
 ### <a name="optimizations">ClojureScript optimizations</a>
 
