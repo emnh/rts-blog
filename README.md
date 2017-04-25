@@ -6,7 +6,7 @@ I am creating a [real-time strategy (RTS) game in WebGL and ClojureScript](https
  - [History](#history)
  - [Game plan](#gameplan)
  - [ClojureScript component architecture](#components)
- - [ClojureScript react middleware](#webui)
+ - [ClojureScript React library: Rum](#webui)
  - [Single-page application](#spa)
  - Resource downloading and progress manager
  - Bootstrapping ClojureScript in a web worker
@@ -60,5 +60,5 @@ At one point I investigated a lot of alternatives to Stuart's component (list ta
 
 They all have advantages and disadvantages, but in the end I decided not to switch (yet). I've been looking hard at [plumatic plumbing graph](https://github.com/plumatic/plumbing) to wire together dependencies lately, and I might switch to that, but I haven't felt like refactoring yet.
 
-### <a name="webui">
+### <a name="webui">ClojureScript React library: Rum</a>
 I chose to use a ClojureScript React library called [Rum](https://github.com/tonsky/rum). I don't remember why I chose this over [Om](https://github.com/omcljs/om) or [Reagent](https://github.com/reagent-project/reagent). I think it might have been this point from the Rum readme: "No enforced state model: Unlike Om, Reagent or Quiescent, Rum does not dictate where to keep your state. Instead, it works well with any storage: persistent data structures, atoms, DataScript, JavaScript objects, localStorage or any custom solution you can think of." Anyway the point of using any such React library over plain HTML for me is that hot reloading comes for free.
