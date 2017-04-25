@@ -137,10 +137,10 @@ I implemented typical RTS controls. Pan left/right/up/down, zoom in/out and also
     (-> camera (.lookAt focus))))
 ```
 
-### <a name="terrain>Terrain</a>
+### <a name="terrain">Terrain</a>
 
 [The source code is here](https://github.com/emnh/rts/blob/master/src.client/game/client/ground_local.cljs)
-[and here](https://github.com/emnh/rts/blob/master/src.client/game/client/ground_fancy.cljs).
+ and [here](https://github.com/emnh/rts/blob/master/src.client/game/client/ground_fancy.cljs).
 
 I mostly stole the code from a [three.js example](https://threejs.org/examples/webgl_terrain_dynamic.html), since I thought it looked good.
 
