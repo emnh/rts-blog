@@ -1,37 +1,31 @@
-## Welcome to GitHub Pages
+# RTS Blog
 
-You can use the [editor on GitHub](https://github.com/emnh/rts-blog/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+I am creating a real-time strategy (RTS) game in WebGL and ClojureScript. This is my blog about the process. I made the mistake of not documenting my development initially, but I will start now (25.04.2017) and try to look back on the code I've already written.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+## Index of blog posts / topics
+ - [History](#history)
+ - [Game plan](#gameplan)
+ - ClojureScript component architecture
+ - Resource downloading and progress manager
+ - Bootstrapping ClojureScript in a web worker
+ - Engine web worker separation and message passing
+ - ClojureScript optimizations
+ - Terrain
+ - Fast heightfield lookup in ClojureScript
+ - Marquee selection
+ - Water
+ - Attack vectors using MathBox
+ - Initial thoughts about multiplayer
 
-### Markdown
+## Blog posts / topics
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+### <a name="history">History</a>
 
-```markdown
-Syntax highlighted code block
+Initially the game was written in JavaScript. I switched (more or less complete rewrite) to ClojureScript because the mutable state everywhere was becoming a mess, for hot code reloading and because Babel compilation times were too high (I think on the order of 30 seconds, but I don't remember so well). I still haven't implemented feature parity with the original version, but I've been focusing on new features instead and notably Starcraft 2 3D model support has been dropped. I suppose the Starcraft 2 on WebGL headline was sparking some of the initial interest, getting a [Hacker News submission](https://news.ycombinator.com/item?id=10205347) on the front page and around 13k views.
 
-# Header 1
-## Header 2
-### Header 3
+Here is a screenshot of the version with free models:
 
-- Bulleted
-- List
 
-1. Numbered
-2. List
+### <a name="intro">Game plan</a>
 
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/emnh/rts-blog/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+My RTS will at least contain the major engine components that an RTS needs. We'll see what it ends up as. It might become an engine with a simple tower defense or something totally different, depending on technical hurdles and wild ideas coming up during development experiments. I am not sure whether I will support multiplayer yet, or whether I will make a series of single player tutorial steps where you write JavaScript or ClojureScript to control the AI of the game to overcome various scenarios (test cases), like CodingGame, but with fancier graphics and more complex rules similar to a commercial RTS. Currently I am leaning towards the latter, because it allows more freedom about simulation speed and no synchronization issues, but at the same time I want the game to be deterministic with a replay function. I defer naming my game until I know what it will be about. I detest having to repeat myself in strategy games building the base, so I want it to be able to be automated.
