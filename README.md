@@ -15,6 +15,7 @@ The following [screenshot](https://emnh.github.io/rts-blog-screenshots/shots/gam
  - Bootstrapping ClojureScript in a web worker
  - Engine logic web worker separation and message passing
  - ClojureScript optimizations
+ - Camera control
  - Terrain
  - Fast heightfield lookup in ClojureScript
  - Voxelization of 3D geometries
