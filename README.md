@@ -83,7 +83,7 @@ I did profiling in Chrome and checked it out. Maybe there were other optimizatio
 
 [The source code is here](https://github.com/emnh/rts/blob/master/src.client/game/client/controls.cljs).
 
-Worth noting is that you should only move the camera for each requestAnimationFrame to make smoother animations, not on the keypress events themselves. The more interesting implementation was arcball rotation:
+I implemented typical RTS controls. Pan left/right/up/down, zoom in/out and also arcball rotation. Worth noting is that you should only move the camera for each requestAnimationFrame to make smoother animations, not on the keypress events themselves. The more interesting implementation was arcball rotation, which I think I got [from here](https://raw.githubusercontent.com/grey-eminence/3DIT/master/js/controls/MapControls.js):
 
 ```clojure
 (defn arc-ball-rotation-left-right
