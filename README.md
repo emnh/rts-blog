@@ -22,7 +22,7 @@ The following [screenshot](https://emnh.github.io/rts-blog-screenshots/shots/gam
  - [Unit explosions using voxelized representation](#explosions)
  - [Magic stars](#magicstars)
  - [Health bars](#healthbars)
- - Marquee selection
+ - [Marquee selection](#marquee)
  - [Water](#water)
  - Attack vectors using MathBox
  - Multiplayer?
@@ -201,3 +201,20 @@ I adapted the [WebGL water code from Evan Wallace](http://madebyevan.com/webgl-w
 
 [Here is a screenshot of the water in my game](https://emnh.github.io/rts-blog-screenshots/shots/water.jpg)
 ![Game water](https://emnh.github.io/rts-blog-screenshots/shots/water.jpg)
+
+### <a name="marquee">Marquee selection</a>
+
+[The source code is here](https://github.com/emnh/rts/blob/master/src.client/game/client/selection.cljs).
+
+I tried out 3 different approaches to get this working fast and accurate:
+ - Subfrustum selection is fast, but inaccurate.
+ - Projecting unit bounding boxes onto screen is slow.
+ - Project unit bounding spheres onto screen is fast and accurate.
+ 
+Check out these links and Stack Overflow questions for more details:
+ - [Marquee Selection with Threejs](http://blog.tempt3d.com/2013/11/marquee-selection-with-threejs.html)
+ - [StackOverflow: Three.js: How to detect the intersection of a 2D square and 3D object](http://stackoverflow.com/questions/27295415/three-js-select-tool-how-to-detect-the-intersection-of-a-2d-square-and-3d-obj)
+ - [StackOverflow: Three.js: How to pick all objects in area](http://stackoverflow.com/questions/20169665/threejs-how-to-pick-all-objects-in-area)
+ 
+ [A screenshot follows:](https://emnh.github.io/rts-blog-screenshots/shots/marquee.jpg)
+ ![Marquee selection](https://emnh.github.io/rts-blog-screenshots/shots/marquee.jpg)
