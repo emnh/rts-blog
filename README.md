@@ -55,11 +55,11 @@ I made a helper macro for creating components called defcom that defines a compo
 All state is kept in one global dictionary, but again, I haven't been diligent about separating updatable atoms and JS objects from serializable state. I need to think more about this and refactor to address this as well, kind of like a virtual DOM that separates input state from UI objects for three.js, recreating and deleting UI objects as units are updated for example. I also look for inspiration from the [redux project](https://github.com/reactjs/redux), to be able to replace local component atoms with a grand central dispatch which updates the global nested state dictionary.
 
 At one point I investigated a lot of alternatives to Stuart's component (list taken from [danielsz system](https://github.com/danielsz/system)):
-- [[https://github.com/juxt/modular][modular]]
-- [[https://github.com/palletops/leaven][leaven]] and [[https://github.com/palletops/bakery][bakery]]
-- [[https://github.com/james-henderson/yoyo][yoyo]]
-- [[http://docs.caudate.me/hara/#haracomponent][hara.component]]
-- [[https://github.com/tolitius/mount][mount]]
+- [modular](https://github.com/juxt/modular)
+- [leaven](https://github.com/palletops/leaven) and [bakery](https://github.com/palletops/bakery])
+- [yoyo](https://github.com/james-henderson/yoyo)
+- [hara.component](http://docs.caudate.me/hara/#haracomponent)
+- [mount](https://github.com/tolitius/mount)
 
 They all have advantages and disadvantages, but in the end I decided not to switch (yet). I've been looking hard at [plumatic plumbing graph](https://github.com/plumatic/plumbing) to wire together dependencies lately, and I might switch to that, but I haven't felt like refactoring yet.
 
