@@ -75,7 +75,7 @@ I used the [goog.History library](https://google.github.io/closure-library/api/g
 [Not much of a screenshot follows:](https://emnh.github.io/rts-blog-screenshots/shots/lobby.jpg)
 ![Lobby](https://emnh.github.io/rts-blog-screenshots/shots/lobby.jpg)
 
-### <a name="worker-bootstrap">Worker bootstrap</a>
+### <a name="worker-bootstrap">Bootstrapping ClojureScript in a web worker</a>
 
 It is quite slow, taking about 5 seconds to load the worker, and there is no figwheel hot reload support.
 Here is how to bootstrap ClojureScript in a Web Worker:
