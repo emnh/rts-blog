@@ -31,7 +31,7 @@ The following [screenshot](https://emnh.github.io/rts-blog-screenshots/shots/gam
 
 Initially the game was written in JavaScript with Babel, the ES2015 and beyond to ES5 compiler. I switched (more or less complete rewrite) to ClojureScript because the mutable state everywhere was becoming a mess, for hot code reloading and because Babel compilation times were too high (I think on the order of 30 seconds, but I don't remember so well). I still haven't implemented feature parity with the original version, but I've been focusing on new features like fancy terrain and water instead and notably Starcraft 2 3D model support has been dropped. I suppose the Starcraft 2 on WebGL headline was sparking some of the initial interest, getting a [Hacker News submission](https://news.ycombinator.com/item?id=10205347) on the front page and around 13k views, but support for non-free models is by far not the primary goal of the project. Developing a strong and independent engine is.
 
-Here is a screenshot of the version with free models:
+Here is a [screenshot](https://emnh.github.io/rts-blog-screenshots/shots/rts-free.jpg) of the version with free models:
 ![screenshot of rts-free](https://emnh.github.io/rts-blog-screenshots/shots/rts-free.jpg)
 
 [Here is the live version](http://emh.lart.no/publish/rts-free.git/).
