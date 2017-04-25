@@ -24,6 +24,7 @@ The following [screenshot](https://emnh.github.io/rts-blog-screenshots/shots/gam
  - [Health bars](#healthbars)
  - [Marquee selection](#marquee)
  - [Water](#water)
+ - [Minimap](#minimap)
  - Attack vectors using MathBox
  - Multiplayer?
 
@@ -216,5 +217,14 @@ Check out these links and Stack Overflow questions for more details:
  - [StackOverflow: Three.js: How to detect the intersection of a 2D square and 3D object](http://stackoverflow.com/questions/27295415/three-js-select-tool-how-to-detect-the-intersection-of-a-2d-square-and-3d-obj)
  - [StackOverflow: Three.js: How to pick all objects in area](http://stackoverflow.com/questions/20169665/threejs-how-to-pick-all-objects-in-area)
  
- [A screenshot follows:](https://emnh.github.io/rts-blog-screenshots/shots/marquee.jpg)
- ![Marquee selection](https://emnh.github.io/rts-blog-screenshots/shots/marquee.jpg)
+[A screenshot follows:](https://emnh.github.io/rts-blog-screenshots/shots/marquee.jpg)
+![Marquee selection](https://emnh.github.io/rts-blog-screenshots/shots/marquee.jpg)
+
+### <a name="minimap">Minimap</a>
+
+[The source code is here](https://github.com/emnh/rts/blob/master/src.client/game/client/minimap.cljs).
+
+The minimap is just the same scene rendered from a fixed top down perspective, except units are toggled invisible and unit box markers are toggled visible and fixed at a certain height above max terrain elevation. The blue square with black border is created using [this technique](https://stemkoski.github.io/Three.js/Outline.html). In the following screenshot I zoomed the camera out so you can see that it's just mostly the same rendering for minimap. It seems fast enough currently, but it might be worth optimizing by caching the terrain and water rendering for the minimap later.
+
+[A screenshot follows:](https://emnh.github.io/rts-blog-screenshots/shots/minimap.jpg)
+![Minimap](https://emnh.github.io/rts-blog-screenshots/shots/minimap.jpg)
