@@ -172,15 +172,22 @@
 }
 
 .page-heading {
-    font-size: 20px;
+    font-size: 36px;
+    font-weight: 700;
 }
 
 .post-list {
     margin-left: 0;
     list-style: none;
 
+    position: absolute;
+    top: 200px;
+    left: 100px;
+
     > li {
-        margin-bottom: $spacing-unit;
+        padding: 0px;
+        margin: 0px;
+        //margin-bottom: $spacing-unit;
     }
 }
 
@@ -190,8 +197,7 @@
 }
 
 .post-link {
-    display: block;
-    font-size: 24px;
+    font-size: 16px;
 }
 
 
@@ -204,7 +210,7 @@
 }
 
 .post-title {
-    font-size: 42px;
+    font-size: 36px;
     letter-spacing: -1px;
     line-height: 1;
 

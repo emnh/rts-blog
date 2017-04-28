@@ -2,46 +2,48 @@
 layout: default
 ---
 
+<div>
+  <ul class="post-list">
+    {% for post in site.posts %}
+      <li>
+        <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
+        -
+        <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+      </li>
+    {% endfor %}
+  </ul>
+</div>
+
 <div class="home">
 
   <h1 class="page-heading">RTS Blog</h1>
 
   <p class="rss-subscribe">Subscribe <a href="{{ "/feed.xml" | prepend: site.baseurl }}">via RSS.</a></p>
 
+  <p>Blog source is on <a href="https://github.com/emnh/rts-blog">GitHub</a></p>
+
   <p>I am creating a <a href="https://github.com/emnh/rts">real-time strategy (RTS) game in WebGL and ClojureScript</a>. This is my blog about the process. I made the mistake of not documenting my development initially, but I will start now (25.04.2017) and try to look back on the code I've already written. If you want to comment on this blog <a href="https://github.com/emnh/rts-blog/issues">open an issue</a> per topic or find an existing one on the GitHub repository. I might attach issue comments to the blog later using <a href="http://donw.io/post/github-comments/">this process</a>.</p>
 
   <p>The following <a href="https://emnh.github.io/rts-blog-screenshots/shots/game-test.jpg">screenshot</a> will be updated as the game progresses (historical images will be in the blog posts about each feature):
   <img src="https://emnh.github.io/rts-blog-screenshots/shots/game-test.jpg" alt="screenshot of rts" title="" /></p>
 
-  <h1 class="page-heading">Post Index</h1>
+  <!--<h1 class="page-heading">Post Index</h1>-->
 
-  <ul class="post-list">
-    {% for post in site.posts %}
-      <li>
+  <h1 class="page-heading">Posts (oldest first)</h1>
+
+  <div>
+    {% for post in site.posts reversed %}
+      <div>
+        <h1>
+          <a class="post-title" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+        </h1>
+
         <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
-
-        <h2>
-          <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
-        </h2>
-      </li>
-    {% endfor %}
-  </ul>
-
-  <h1 class="page-heading">Posts</h1>
-
-  <ul>
-    {% for post in site.posts %}
-      <li>
-        <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
-
-        <h2>
-          <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
-        </h2>
 
         {{ post.content }}
-      </li>
+      </div>
     {% endfor %}
-  </ul>
+  </div>
 
 
 </div>
